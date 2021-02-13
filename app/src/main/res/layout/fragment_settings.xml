@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.FriendsFragment">
+    tools:context=".fragments.SettingsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -11,6 +11,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Friends" />
+            android:text="Settings" />
     </RelativeLayout>
+
 </FrameLayout>
