@@ -8,9 +8,54 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
+
+        <EditText
+            android:id="@+id/editTextFindFriends"
+            android:layout_width="300dp"
+            android:layout_height="35dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:background="@drawable/custom_input"
+            android:padding="10dp"
+            android:hint="@string/find_friends"
+            android:inputType="textPersonName"
+            android:textSize="15sp"
+           />
+
+        <Button
+            android:id="@+id/button_friends_addFriend"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="20dp"
+            android:layout_toEndOf="@+id/editTextFindFriends"
+            android:layout_marginStart="10dp"
+            android:textSize="10sp"
+            android:text="@string/Add" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_friends"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Friends" />
+            android:layout_centerHorizontal="true"
+            android:layout_alignTop="@+id/divider_friends"
+            android:layout_marginVertical="30dp"/>
+
+        <View
+            android:id="@+id/divider_friends"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignTop="@+id/editTextFindFriends"
+            android:layout_marginVertical="130dp"
+            android:background="?android:attr/listDivider" />
+
+        <TextView
+            android:id="@+id/textView_friends"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/divider_friends"
+            android:layout_marginVertical="10dp"
+            android:textColor="#CD780A"
+            android:text="@string/friends_count" />
     </RelativeLayout>
 </FrameLayout>
