@@ -1,5 +1,15 @@
 <resources>
     <string name="app_name">Woo Chat</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="logo">logo</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="goback">goBack</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Please enter your email</string>
+    <string name="password">Password</string>
+    <string name="password_hint">Please enter your password</string>
+    <string name="signUp_hint">Don\'t have an account?</string>
+    <string name="nick_name">Nick Name</string>
+    <string name="nickname_hint">Please entey your nickname</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
