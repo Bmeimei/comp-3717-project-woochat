@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WooChat">
+        <activity android:name=".ChatRoomActivity"></activity>
         <activity android:name=".SignUp" />
         <activity android:name=".Login" />
         <activity android:name=".Landing" />
