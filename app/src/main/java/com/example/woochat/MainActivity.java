@@ -36,11 +36,14 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch(item.getItemId()) {
                     case R.id.ic_friends:
-                       makeCurrentFragment(friendsFragment);
+                        makeCurrentFragment(friendsFragment);
+                        break;
                     case R.id.ic_chat:
                         makeCurrentFragment(chatFragment);
+                        break;
                     case R.id.ic_settings:
                         makeCurrentFragment(settingsFragment);
+                        break;
                 }
                 return true;
             }
