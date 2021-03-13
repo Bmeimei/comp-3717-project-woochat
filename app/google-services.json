@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "915500646359",
+    "firebase_url": "https://woochat-3ce8d-default-rtdb.firebaseio.com",
+    "project_id": "woochat-3ce8d",
+    "storage_bucket": "woochat-3ce8d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:915500646359:android:c76cd3ec4b00ef90005592",
+        "android_client_info": {
+          "package_name": "com.example.woochat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "915500646359-1qm0ka9o0jvf38jfcvjpr33djv97k49t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB87NLJ7LRBDHxM9PgMHVtFwXhDHGSb39k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "915500646359-1qm0ka9o0jvf38jfcvjpr33djv97k49t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
