@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lgoinPageLoginButton"
+        app:layout_constraintTop_toBottomOf="@+id/loginPageLoginButton"
         app:layout_constraintVertical_bias="0.315" />
 
     <TextView
@@ -130,7 +130,7 @@
         app:layout_constraintVertical_bias="0.196" />
 
     <Button
-        android:id="@+id/lgoinPageLoginButton"
+        android:id="@+id/loginPageLoginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/login"
