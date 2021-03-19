@@ -15,4 +15,6 @@
     <string name="find_friends">Find Friends</string>
     <string name="Add">+</string>
     <string name="friends_count">Friends()</string>
+    <string name="friend_image">Friend Image</string>
+    <string name="friend_name">Friend Name</string>
 </resources>

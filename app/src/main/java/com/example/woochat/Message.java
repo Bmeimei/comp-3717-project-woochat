@@ -3,11 +3,11 @@ package com.example.woochat;
 import java.util.Date;
 
 public class Message {
-    final String messageId;
-    final String senderId;
-    final String receiverId;
-    final String messageContent;
-    final Date time;
+    public final String messageId;
+    public final String senderId;
+    public final String receiverId;
+    public final String messageContent;
+    public final Date time;
 
     public Message(String messageId,
                    String senderId,

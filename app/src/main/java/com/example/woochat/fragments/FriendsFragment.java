@@ -2,13 +2,28 @@ package com.example.woochat.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.woochat.FriendAdapter;
+import com.example.woochat.MainActivity;
 import com.example.woochat.R;
+import com.example.woochat.User;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +31,10 @@ import com.example.woochat.R;
  * create an instance of this fragment.
  */
 public class FriendsFragment extends Fragment {
+
+    RecyclerView friendView;
+    DatabaseReference databaseReference;
+    List<User> friendList;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,12 +74,42 @@ public class FriendsFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("user");
+        friendList = new ArrayList<>();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_friends, container, false);
+        friendView = view.findViewById(R.id.recycler_friends);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_friends, container, false);
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                friendList.clear();
+                for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
+                    friendList.add(friendSnapshot.getValue(User.class));
+                }
+                FriendAdapter friendAdapter = new FriendAdapter(friendList);
+
+                friendView.setAdapter(friendAdapter);
+                friendView.setLayoutManager(new LinearLayoutManager(getContext()));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }
