@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="80dp"
+    android:background="#8FFAF7F7"
     android:gravity="start|center_vertical"
     android:orientation="horizontal">
 
@@ -11,7 +12,7 @@
         android:id="@+id/friend_imageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2"
+        android:layout_weight="6"
         android:contentDescription="@string/friend_image"
         tools:srcCompat="@tools:sample/avatars" />
 
@@ -21,8 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:fontFamily="sans-serif-black"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
         android:text="@string/friend_name"
         android:textSize="18sp"
         android:textStyle="bold" />
