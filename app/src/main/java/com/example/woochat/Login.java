@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class Login extends AppCompatActivity {
 
@@ -52,6 +53,11 @@ public class Login extends AppCompatActivity {
                                     "Successfully Login!",
                                     Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(Login.this, MainActivity.class);
+//                            firebaseUser = firebaseAuth.getCurrentUser();
+//                            assert firebaseUser != null;
+//                            uid = firebaseUser.getUid();
+                            // send logged in user info to MainActivity
+//                            intent.putExtra("user_email", email);
                             startActivity(intent);
                         } else {
                             Log.w("TAG", "signInWithEmail:failure", task.getException());

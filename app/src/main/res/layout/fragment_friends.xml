@@ -37,9 +37,9 @@
             android:id="@+id/recycler_friends"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_centerHorizontal="true"
             android:layout_alignTop="@+id/divider_friends"
-            android:layout_marginVertical="30dp"/>
+            android:layout_marginVertical="30dp"
+            android:layout_marginTop="58dp" />
 
         <View
             android:id="@+id/divider_friends"
@@ -47,6 +47,7 @@
             android:layout_height="1dp"
             android:layout_alignTop="@+id/editTextFindFriends"
             android:layout_marginVertical="130dp"
+            android:layout_marginTop="147dp"
             android:background="?android:attr/listDivider" />
 
         <TextView
@@ -55,7 +56,17 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/divider_friends"
             android:layout_marginVertical="10dp"
-            android:textColor="#CD780A"
-            android:text="@string/friends_count" />
+            android:layout_marginBottom="-11dp"
+            android:text="@string/friends_count"
+            android:textColor="#CD780A" />
+
+        <TextView
+            android:id="@+id/textView_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="70dp"
+            android:layout_marginBottom="-11dp"
+            android:text="TextView" />
+
     </RelativeLayout>
 </FrameLayout>

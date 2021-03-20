@@ -10,4 +10,8 @@ public class User {
         this.email = email;
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
 }
