@@ -42,6 +42,7 @@ public class FriendsFragment extends Fragment {
     TextView tvFriends;
     String user_email;
     String user_name;
+    TextView tvCurrentUser;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,7 +95,7 @@ public class FriendsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
         friendView = view.findViewById(R.id.recycler_friends);
         tvFriends = view.findViewById(R.id.textView_friends);
-        TextView tvCurrentUser = view.findViewById(R.id.tv_friends_username);
+        tvCurrentUser = view.findViewById(R.id.tv_friends_username);
 
         FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
@@ -102,25 +103,7 @@ public class FriendsFragment extends Fragment {
             String uid = firebaseUser.getUid();
             user_email = firebaseUser.getEmail();
         }
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot data : dataSnapshot.getChildren()) {
-                    if (data.child("email").getValue().equals(user_email)) {
-                   
-                        user_name = data.child("name").getValue(String.class);
-                    }
-                }
-                tvCurrentUser.setText(user_name);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
+        tvCurrentUser.setText(user_email);
 
         // Inflate the layout for this fragment
         return view;
@@ -136,7 +119,8 @@ public class FriendsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 friendList.clear();
                 for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
-                    friendList.add(friendSnapshot.getValue(User.class));
+                    User user = friendSnapshot.getValue(User.class);
+                    friendList.add(user);
                 }
                 String friendsHeader = "Friends (" + friendList.size() + ")";
                 tvFriends.setText(friendsHeader);
