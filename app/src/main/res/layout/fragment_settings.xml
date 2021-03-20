@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,10 +9,119 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="30dp"
+            android:src="@drawable/friend_image"
+            app:civ_border_color="#FF000000"
+            android:layout_centerHorizontal="true"
+            app:civ_border_width="2dp" />
+
+        <GridLayout
+            android:id="@+id/setting_gridLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/profile_image"
+            android:layout_marginTop="41dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:useDefaultMargins="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_columnWeight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userName_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    android:text="@string/user_name"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/userId_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    android:text="@string/user_id"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/userEmail_label"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    android:text="@string/user_email"
+                    android:textAlignment="center" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_columnWeight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userName_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    android:text="@string/user_name"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/userId_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    android:text="@string/user_id"
+                    android:textAlignment="center" />
+
+                <TextView
+                    android:id="@+id/userEmail_textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="5dp"
+                    android:textAlignment="center"
+                    android:text="@string/user_email" />
+            </LinearLayout>
+
+        </GridLayout>
+
+        <View
+            android:id="@+id/setting_divider"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/setting_gridLayout"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="-126dp"
+            android:background="?android:attr/listDivider" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Settings" />
+            android:layout_below="@+id/setting_gridLayout"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/logout_button"
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:text="@string/log_out"
+                android:textSize="18sp" />
+        </LinearLayout>
+
     </RelativeLayout>
 
 </FrameLayout>

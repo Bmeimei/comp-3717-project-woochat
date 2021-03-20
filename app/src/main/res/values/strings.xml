@@ -17,4 +17,8 @@
     <string name="friends_count">Friends()</string>
     <string name="friend_image">Friend Image</string>
     <string name="friend_name">Friend Name</string>
+    <string name="user_name">User Name</string>
+    <string name="user_id">User Id</string>
+    <string name="user_email">User Email</string>
+    <string name="log_out">Log Out</string>
 </resources>
