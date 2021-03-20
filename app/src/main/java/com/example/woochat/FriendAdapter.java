@@ -52,8 +52,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
 
         public FriendHolder(@NonNull View itemView) {
             super(itemView);
-            friendIcon = itemView.findViewById(R.id.friend_imageView);
-            friendName = itemView.findViewById(R.id.friendName_textView);
+            friendIcon = itemView.findViewById(R.id.imageView_chat);
+            friendName = itemView.findViewById(R.id.textView_chat_friendName);
         }
     }
 }
