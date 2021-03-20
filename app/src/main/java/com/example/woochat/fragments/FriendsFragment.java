@@ -1,5 +1,6 @@
 package com.example.woochat.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,11 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.woochat.FriendAdapter;
-import com.example.woochat.MainActivity;
 import com.example.woochat.R;
 import com.example.woochat.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +37,11 @@ public class FriendsFragment extends Fragment {
 
     RecyclerView friendView;
     DatabaseReference databaseReference;
+    FirebaseDatabase firebaseDatabase;
     List<User> friendList;
+    TextView tvFriends;
+    String user_email;
+    String user_name;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,6 +83,7 @@ public class FriendsFragment extends Fragment {
         }
 
         databaseReference = FirebaseDatabase.getInstance().getReference("user");
+        firebaseDatabase = FirebaseDatabase.getInstance();
         friendList = new ArrayList<>();
     }
 
@@ -85,6 +93,35 @@ public class FriendsFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_friends, container, false);
         friendView = view.findViewById(R.id.recycler_friends);
+        tvFriends = view.findViewById(R.id.textView_friends);
+        TextView tvCurrentUser = view.findViewById(R.id.tv_friends_username);
+
+        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (firebaseUser != null) {
+            String uid = firebaseUser.getUid();
+            user_email = firebaseUser.getEmail();
+        }
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot data : dataSnapshot.getChildren()) {
+                    if (data.child("email").getValue().equals(user_email)) {
+                   
+                        user_name = data.child("name").getValue(String.class);
+                    }
+                }
+                tvCurrentUser.setText(user_name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -100,8 +137,9 @@ public class FriendsFragment extends Fragment {
                 for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
                     friendList.add(friendSnapshot.getValue(User.class));
                 }
+                String friendsHeader = "Friends (" + friendList.size() + ")";
+                tvFriends.setText(friendsHeader);
                 FriendAdapter friendAdapter = new FriendAdapter(friendList);
-
                 friendView.setAdapter(friendAdapter);
                 friendView.setLayoutManager(new LinearLayoutManager(getContext()));
             }
