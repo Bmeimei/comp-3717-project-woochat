@@ -68,9 +68,6 @@ public class SettingsFragment extends Fragment {
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        if (firebaseUser != null) {
-            userEmail = firebaseUser.getEmail();
-        }
 
         Bundle bundle = this.getArguments();
         assert bundle != null;
@@ -84,6 +81,9 @@ public class SettingsFragment extends Fragment {
                 assert currentUser != null;
                 userName = currentUser.name;
                 userNameText.setText(userName);
+
+                userEmail = currentUser.email;
+                userEmailText.setText(userEmail);
             }
 
             @Override
@@ -102,9 +102,7 @@ public class SettingsFragment extends Fragment {
         userIdText = view.findViewById(R.id.userId_textView);
         userEmailText = view.findViewById(R.id.userEmail_textView);
 
-        userNameText.setText(userName);
         userIdText.setText(userId);
-        userEmailText.setText(userEmail);
 
         logoutButton = view.findViewById(R.id.logout_button);
         logoutButton.setOnClickListener(v -> logout());
