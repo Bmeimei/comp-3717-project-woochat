@@ -37,21 +37,12 @@ public class FriendsFragment extends Fragment {
 
     RecyclerView friendView;
     DatabaseReference databaseReference;
-    FirebaseDatabase firebaseDatabase;
     List<User> friendList;
     TextView tvFriends;
     String user_email;
     String user_name;
     TextView tvCurrentUser;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    FirebaseUser firebaseUser;
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -60,49 +51,28 @@ public class FriendsFragment extends Fragment {
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+
      * @return A new instance of fragment FriendsFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static FriendsFragment newInstance(String param1, String param2) {
+    public static FriendsFragment newInstance() {
         FriendsFragment fragment = new FriendsFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+
         return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         databaseReference = FirebaseDatabase.getInstance().getReference("user");
-        firebaseDatabase = FirebaseDatabase.getInstance();
         friendList = new ArrayList<>();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_friends, container, false);
-        friendView = view.findViewById(R.id.recycler_friends);
-        tvFriends = view.findViewById(R.id.textView_friends);
-        tvCurrentUser = view.findViewById(R.id.tv_friends_username);
-
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
         if (firebaseUser != null) {
-            String uid = firebaseUser.getUid();
             user_email = firebaseUser.getEmail();
         }
+
 
 
         // Inflate the layout for this fragment
@@ -113,6 +83,7 @@ public class FriendsFragment extends Fragment {
     public void onStart() {
         super.onStart();
 
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -120,10 +91,13 @@ public class FriendsFragment extends Fragment {
                 for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
                     User user = friendSnapshot.getValue(User.class);
                     assert user != null;
-                    if(user.email.equals(user_email)) {
+
+                    if (user.email.equals(user_email)) {
                         user_name = user.name;
+                    } else {
+                        friendList.add(user);
                     }
-                    friendList.add(user);
+
                 }
                 tvCurrentUser.setText(user_name);
                 String friendsHeader = "Friends (" + friendList.size() + ")";
@@ -139,4 +113,19 @@ public class FriendsFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_friends, container, false);
+        friendView = view.findViewById(R.id.recycler_friends);
+        tvFriends = view.findViewById(R.id.textView_friends);
+        tvCurrentUser = view.findViewById(R.id.tv_friends_username);
+        tvCurrentUser.setText(user_name);
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
 }
