@@ -8,6 +8,18 @@
     tools:context=".Login">
 
     <Button
+        android:id="@+id/loginPageGoogleLoginButton"
+        android:layout_width="163dp"
+        android:layout_height="62dp"
+        android:layout_marginTop="120dp"
+        android:text="@string/google_login"
+        android:textAlignment="center"
+        app:backgroundTint="#6A3A16"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signUpTextView" />
+
+    <Button
         android:id="@+id/loginPageSignUpButton"
         android:layout_width="163dp"
         android:layout_height="62dp"

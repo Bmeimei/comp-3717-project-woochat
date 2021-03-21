@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class FriendsFragment extends Fragment {
     TextView tvFriends;
     String user_email;
     String user_name;
+    String user_id;
     TextView tvCurrentUser;
     FirebaseUser firebaseUser;
 
@@ -54,7 +56,6 @@ public class FriendsFragment extends Fragment {
 
      * @return A new instance of fragment FriendsFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static FriendsFragment newInstance() {
         FriendsFragment fragment = new FriendsFragment();
 
@@ -72,17 +73,30 @@ public class FriendsFragment extends Fragment {
         if (firebaseUser != null) {
             user_email = firebaseUser.getEmail();
         }
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
+        user_id = bundle.getString("id");
+        databaseReference.child(user_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    User currentUser = dataSnapshot.getValue(User.class);
+                    assert currentUser != null;
+                    user_name = currentUser.name;
+                    tvCurrentUser.setText(user_name);
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-
-        // Inflate the layout for this fragment
-        return view;
+            }
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
-
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -92,14 +106,12 @@ public class FriendsFragment extends Fragment {
                     User user = friendSnapshot.getValue(User.class);
                     assert user != null;
 
-                    if (user.email.equals(user_email)) {
-                        user_name = user.name;
-                    } else {
+                    if (!user.email.equals(user_email)) {
                         friendList.add(user);
                     }
 
                 }
-                tvCurrentUser.setText(user_name);
+
                 String friendsHeader = "Friends (" + friendList.size() + ")";
                 tvFriends.setText(friendsHeader);
                 FriendAdapter friendAdapter = new FriendAdapter(friendList);

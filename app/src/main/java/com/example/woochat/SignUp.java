@@ -90,6 +90,7 @@ public class SignUp extends AppCompatActivity {
             task.addOnSuccessListener(e -> {
                 Log.d("Sign Up success", "Successful Create User.");
                 Intent intent = new Intent(SignUp.this, MainActivity.class);
+                intent.putExtra("id", id);
                 startActivity(intent);
             });
 

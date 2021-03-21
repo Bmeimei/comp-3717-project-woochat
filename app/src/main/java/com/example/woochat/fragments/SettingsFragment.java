@@ -71,24 +71,19 @@ public class SettingsFragment extends Fragment {
         if (firebaseUser != null) {
             userEmail = firebaseUser.getEmail();
         }
-    }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
+        userId = bundle.getString("id");
 
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("user");
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    User user = snapshot.getValue(User.class);
-                    assert user != null;
-                    if (user.email.equals(userEmail)) {
-                        userName = user.name;
-                        userId = user.userId;
-                    }
-                }
+                User currentUser = dataSnapshot.getValue(User.class);
+                assert currentUser != null;
+                userName = currentUser.name;
+                userNameText.setText(userName);
             }
 
             @Override
@@ -96,7 +91,6 @@ public class SettingsFragment extends Fragment {
 
             }
         });
-
     }
 
     @Override

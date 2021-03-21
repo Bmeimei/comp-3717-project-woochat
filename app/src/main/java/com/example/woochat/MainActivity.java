@@ -17,20 +17,10 @@ import com.example.woochat.fragments.ChatFragment;
 import com.example.woochat.fragments.FriendsFragment;
 import com.example.woochat.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    RecyclerView friendView;
-    DatabaseReference databaseReference;
-    List<User> friendList;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,29 +28,34 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
+        userId = getIntent().getStringExtra("id");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("id", userId);
         Fragment friendsFragment = new FriendsFragment();
         Fragment chatFragment = new ChatFragment();
         Fragment settingsFragment = new SettingsFragment();
 
+        friendsFragment.setArguments(bundle);
+        chatFragment.setArguments(bundle);
+        settingsFragment.setArguments(bundle);
+
         makeCurrentFragment(friendsFragment);
 
         BottomNavigationView bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch(item.getItemId()) {
-                    case R.id.ic_friends:
-                        makeCurrentFragment(friendsFragment);
-                        break;
-                    case R.id.ic_chat:
-                        makeCurrentFragment(chatFragment);
-                        break;
-                    case R.id.ic_settings:
-                        makeCurrentFragment(settingsFragment);
-                        break;
-                }
-                return true;
+        bottomNavigation.setOnNavigationItemSelectedListener(item -> {
+            switch(item.getItemId()) {
+                case R.id.ic_friends:
+                    makeCurrentFragment(friendsFragment);
+                    break;
+                case R.id.ic_chat:
+                    makeCurrentFragment(chatFragment);
+                    break;
+                case R.id.ic_settings:
+                    makeCurrentFragment(settingsFragment);
+                    break;
             }
+            return true;
         });
 
     }

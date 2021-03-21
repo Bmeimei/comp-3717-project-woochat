@@ -13,19 +13,29 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 public class Login extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
+    private DatabaseReference databaseReference;
     private EditText emailText;
     private EditText passwordText;
 
     public Button loginButton;
     public Button signUpButton;
+    public Button googleLoginButton;
 
     ImageView backButton;
 
@@ -40,6 +50,9 @@ public class Login extends AppCompatActivity {
 
         loginButton = findViewById(R.id.loginPageLoginButton);
         loginButton.setOnClickListener(v -> login());
+
+        googleLoginButton = findViewById(R.id.loginPageGoogleLoginButton);
+        googleLoginButton.setOnClickListener(v -> loginByGoogleAccount());
 
         emailText = findViewById(R.id.emailInputBox);
         passwordText = findViewById(R.id.passwordInputBox);
@@ -58,11 +71,29 @@ public class Login extends AppCompatActivity {
             firebaseAuth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(Login.this,
-                                    "Successfully Login!",
-                                    Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(Login.this, MainActivity.class);
-                            startActivity(intent);
+                            databaseReference = FirebaseDatabase.getInstance().getReference("user");
+                            databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                        User user = snapshot.getValue(User.class);
+                                        assert user != null;
+                                        if (user.email.equals(email)) {
+                                            Toast.makeText(Login.this,
+                                                    "Successfully Login!",
+                                                    Toast.LENGTH_LONG).show();
+                                            Intent intent = new Intent(Login.this, MainActivity.class);
+                                            intent.putExtra("id", user.userId);
+                                            startActivity(intent);
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
                         } else {
                             Log.w("TAG", "signInWithEmail:failure", task.getException());
                             Toast.makeText(Login.this,
@@ -85,5 +116,12 @@ public class Login extends AppCompatActivity {
             return true;
         }
         return false;
+    }
+
+    private void loginByGoogleAccount() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build();
     }
 }
