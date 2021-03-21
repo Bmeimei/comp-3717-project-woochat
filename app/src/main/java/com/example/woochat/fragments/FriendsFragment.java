@@ -72,25 +72,6 @@ public class FriendsFragment extends Fragment {
         if (firebaseUser != null) {
             user_email = firebaseUser.getEmail();
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_friends, container, false);
-        friendView = view.findViewById(R.id.recycler_friends);
-        tvFriends = view.findViewById(R.id.textView_friends);
-        tvCurrentUser = view.findViewById(R.id.tv_friends_username);
-        tvCurrentUser.setText(user_name);
-
-        // Inflate the layout for this fragment
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
 
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -118,4 +99,19 @@ public class FriendsFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_friends, container, false);
+        friendView = view.findViewById(R.id.recycler_friends);
+        tvFriends = view.findViewById(R.id.textView_friends);
+        tvCurrentUser = view.findViewById(R.id.tv_friends_username);
+        tvCurrentUser.setText(user_name);
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
 }
