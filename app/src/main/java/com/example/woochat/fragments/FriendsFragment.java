@@ -37,12 +37,12 @@ public class FriendsFragment extends Fragment {
 
     RecyclerView friendView;
     DatabaseReference databaseReference;
-    FirebaseDatabase firebaseDatabase;
     List<User> friendList;
     TextView tvFriends;
     String user_email;
     String user_name;
     TextView tvCurrentUser;
+    FirebaseUser firebaseUser;
 
     public FriendsFragment() {
         // Required empty public constructor
@@ -66,8 +66,12 @@ public class FriendsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("user");
-        firebaseDatabase = FirebaseDatabase.getInstance();
         friendList = new ArrayList<>();
+        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+        if (firebaseUser != null) {
+            user_email = firebaseUser.getEmail();
+        }
     }
 
     @Override
@@ -78,19 +82,11 @@ public class FriendsFragment extends Fragment {
         friendView = view.findViewById(R.id.recycler_friends);
         tvFriends = view.findViewById(R.id.textView_friends);
         tvCurrentUser = view.findViewById(R.id.tv_friends_username);
-
-        FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-
-        if (firebaseUser != null) {
-            String uid = firebaseUser.getUid();
-            user_email = firebaseUser.getEmail();
-        }
-        tvCurrentUser.setText(user_email);
+        tvCurrentUser.setText(user_name);
 
         // Inflate the layout for this fragment
         return view;
     }
-
 
     @Override
     public void onStart() {
@@ -102,7 +98,12 @@ public class FriendsFragment extends Fragment {
                 friendList.clear();
                 for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
                     User user = friendSnapshot.getValue(User.class);
-                    friendList.add(user);
+                    assert user != null;
+                    if (user.email.equals(user_email)) {
+                        user_name = user.name;
+                    } else {
+                        friendList.add(user);
+                    }
                 }
                 String friendsHeader = "Friends (" + friendList.size() + ")";
                 tvFriends.setText(friendsHeader);
