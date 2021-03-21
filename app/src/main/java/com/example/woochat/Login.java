@@ -155,19 +155,13 @@ public class Login extends AppCompatActivity {
                 assert googleSignInAccount != null;
                 String name = googleSignInAccount.getDisplayName();
                 String email = googleSignInAccount.getEmail();
-                System.out.println("Email:" + email);
                 String id = googleSignInAccount.getId();
                 User user = new User(id, email, name);
                 assert id != null;
                 Task<Void> task = databaseReference.child(id).setValue(user);
 
                 try {
-                    task.addOnSuccessListener(e -> {
-                        firebaseAuthWithGoogle(googleSignInAccount);
-                        Log.d("Sign Up success", "Successful Create User.");
-                        Intent intent = new Intent(Login.this, MainActivity.class);
-                        intent.putExtra("id", id);
-                    });
+                    task.addOnSuccessListener(e -> firebaseAuthWithGoogle(googleSignInAccount));
 
                     task.addOnFailureListener(e -> Log.d("Failed", "Failed To Create User"));
                 } catch (Exception e) {
@@ -191,8 +185,8 @@ public class Login extends AppCompatActivity {
                                 "Successfully Login!",
                                 Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Login.this, MainActivity.class);
+                        intent.putExtra("id", googleSignInAccount.getId());
                         startActivity(intent);
-                        Login.this.finish();
                     }
                 });
     }
