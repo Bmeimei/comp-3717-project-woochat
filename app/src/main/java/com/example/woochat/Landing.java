@@ -18,6 +18,7 @@ public class Landing extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_landing);
 
         loginButton = findViewById(R.id.loginButton);

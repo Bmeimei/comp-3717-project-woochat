@@ -73,6 +73,17 @@ public class FriendsFragment extends Fragment {
             user_email = firebaseUser.getEmail();
         }
 
+
+
+        // Inflate the layout for this fragment
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -80,12 +91,15 @@ public class FriendsFragment extends Fragment {
                 for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
                     User user = friendSnapshot.getValue(User.class);
                     assert user != null;
+
                     if (user.email.equals(user_email)) {
                         user_name = user.name;
                     } else {
                         friendList.add(user);
                     }
+
                 }
+                tvCurrentUser.setText(user_name);
                 String friendsHeader = "Friends (" + friendList.size() + ")";
                 tvFriends.setText(friendsHeader);
                 FriendAdapter friendAdapter = new FriendAdapter(friendList);
