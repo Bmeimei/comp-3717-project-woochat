@@ -103,7 +103,7 @@ public class FriendsFragment extends Fragment {
             String uid = firebaseUser.getUid();
             user_email = firebaseUser.getEmail();
         }
-        tvCurrentUser.setText(user_email);
+
 
         // Inflate the layout for this fragment
         return view;
@@ -119,8 +119,13 @@ public class FriendsFragment extends Fragment {
                 friendList.clear();
                 for (DataSnapshot friendSnapshot : dataSnapshot.getChildren()) {
                     User user = friendSnapshot.getValue(User.class);
+                    assert user != null;
+                    if(user.email.equals(user_email)) {
+                        user_name = user.name;
+                    }
                     friendList.add(user);
                 }
+                tvCurrentUser.setText(user_name);
                 String friendsHeader = "Friends (" + friendList.size() + ")";
                 tvFriends.setText(friendsHeader);
                 FriendAdapter friendAdapter = new FriendAdapter(friendList);

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -32,6 +33,7 @@ public class SignUp extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         setContentView(R.layout.activity_sign_up);
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference("user");
@@ -43,6 +45,11 @@ public class SignUp extends AppCompatActivity {
         signUpButton = findViewById(R.id.signUpPageButton);
 
         signUpButton.setOnClickListener(v -> signUp());
+    }
+
+    public void backToLandingPage(View view) {
+        Intent intent = new Intent(this, Landing.class);
+        startActivity(intent);
     }
 
     private void signUp() {
