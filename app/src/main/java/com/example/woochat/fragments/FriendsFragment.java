@@ -12,8 +12,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.woochat.FriendAdapter;
+import com.example.woochat.OnItemClickListener;
 import com.example.woochat.R;
 import com.example.woochat.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -114,7 +116,17 @@ public class FriendsFragment extends Fragment {
 
                 String friendsHeader = "Friends (" + friendList.size() + ")";
                 tvFriends.setText(friendsHeader);
-                FriendAdapter friendAdapter = new FriendAdapter(friendList);
+                FriendAdapter friendAdapter = new FriendAdapter(friendList, new OnItemClickListener() {
+
+                    /**
+                     * TODO: Implement the chat function with friend here.
+                     */
+                    @Override
+                    public void setOnItemClickListener(User friend) {
+                        String word = String.format("User Name: %s, Friend Name: %s", user_name, friend.name);
+                        Toast.makeText(getContext(), word, Toast.LENGTH_LONG).show();
+                    }
+                });
                 friendView.setAdapter(friendAdapter);
                 friendView.setLayoutManager(new LinearLayoutManager(getContext()));
             }
@@ -139,5 +151,4 @@ public class FriendsFragment extends Fragment {
         // Inflate the layout for this fragment
         return view;
     }
-
 }

@@ -14,9 +14,11 @@ import java.util.List;
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHolder> {
 
     private final List<User> friendList;
+    private final OnItemClickListener onItemClickListener;
 
-    public FriendAdapter(List<User> friendList) {
+    public FriendAdapter(List<User> friendList, OnItemClickListener onItemClickListener) {
         this.friendList = friendList;
+        this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
@@ -38,6 +40,8 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         // TODO   Replace ImageView with User Icon
         imageView.setImageResource(R.drawable.friend_image);
         textView.setText(user.name);
+
+        holder.onClick(user, onItemClickListener);
     }
 
     @Override
@@ -55,5 +59,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
             friendIcon = itemView.findViewById(R.id.imageView_chat);
             friendName = itemView.findViewById(R.id.textView_chat_friendName);
         }
+
+        /**
+         * Set an onclick function for this holder.
+         */
+        public void onClick(User user, OnItemClickListener onItemClickListener) {
+            itemView.setOnClickListener(v -> onItemClickListener.setOnItemClickListener(user));
+        };
     }
 }
