@@ -83,6 +83,7 @@ public class Login extends AppCompatActivity {
 
     public void backToLandingPage(View view) {
         Intent intent = new Intent(this, Landing.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
 
@@ -186,7 +187,9 @@ public class Login extends AppCompatActivity {
                                 Toast.LENGTH_LONG).show();
                         Intent intent = new Intent(Login.this, MainActivity.class);
                         intent.putExtra("id", googleSignInAccount.getId());
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                        finish();
                     }
                 });
     }

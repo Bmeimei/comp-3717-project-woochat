@@ -59,7 +59,9 @@ public class Landing extends AppCompatActivity {
                                     Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(Landing.this, MainActivity.class);
                             intent.putExtra("id", user.userId);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
+                            finish();
                         }
                     }
                 }

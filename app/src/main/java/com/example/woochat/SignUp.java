@@ -91,7 +91,9 @@ public class SignUp extends AppCompatActivity {
                 Log.d("Sign Up success", "Successful Create User.");
                 Intent intent = new Intent(SignUp.this, MainActivity.class);
                 intent.putExtra("id", id);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+                finish();
             });
 
             task.addOnFailureListener(e -> Log.d("Failed", "Failed To Create User"));
