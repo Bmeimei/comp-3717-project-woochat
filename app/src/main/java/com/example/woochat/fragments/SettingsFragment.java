@@ -10,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.woochat.DownloadImageFromUrl;
 import com.example.woochat.Landing;
-import com.example.woochat.MainActivity;
 import com.example.woochat.R;
 import com.example.woochat.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,8 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,10 +39,12 @@ public class SettingsFragment extends Fragment {
     String userName;
     String userId;
     String userEmail;
+    String imageUrl;
 
     TextView userNameText;
     TextView userIdText;
     TextView userEmailText;
+    ImageView userImage;
 
     public SettingsFragment() {
 
@@ -84,6 +84,8 @@ public class SettingsFragment extends Fragment {
 
                 userEmail = currentUser.email;
                 userEmailText.setText(userEmail);
+
+                imageUrl = currentUser.imageUrl;
             }
 
             @Override
@@ -101,6 +103,7 @@ public class SettingsFragment extends Fragment {
         userNameText = view.findViewById(R.id.userName_textView);
         userIdText = view.findViewById(R.id.userId_textView);
         userEmailText = view.findViewById(R.id.userEmail_textView);
+        userImage = view.findViewById(R.id.profile_image);
 
         userIdText.setText(userId);
 
@@ -117,4 +120,5 @@ public class SettingsFragment extends Fragment {
         Toast.makeText(getContext(), "Successfully Log Out!", Toast.LENGTH_LONG).show();
         startActivity(intent);
     }
+
 }

@@ -157,7 +157,8 @@ public class Login extends AppCompatActivity {
                 String name = googleSignInAccount.getDisplayName();
                 String email = googleSignInAccount.getEmail();
                 String id = googleSignInAccount.getId();
-                User user = new User(id, email, name);
+                String imageUrl = "https://i.ibb.co/fkgmtvK/friend-image.jpg";
+                User user = new User(id, email, name, imageUrl);
                 assert id != null;
                 Task<Void> task = databaseReference.child(id).setValue(user);
 

@@ -36,9 +36,9 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         TextView textView = holder.friendName;
 
         User user = friendList.get(position);
+        String imageUrl = user.imageUrl;
 
-        // TODO   Replace ImageView with User Icon
-        imageView.setImageResource(R.drawable.friend_image);
+        new DownloadImageFromUrl(imageView).execute(imageUrl);
         textView.setText(user.name);
 
         holder.onClick(user, onItemClickListener);

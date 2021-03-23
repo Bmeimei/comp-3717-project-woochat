@@ -45,6 +45,7 @@ public class FriendsFragment extends Fragment {
     String user_email;
     String user_name;
     String user_id;
+    String imageUrl;
     TextView tvCurrentUser;
     FirebaseUser firebaseUser;
 

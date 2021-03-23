@@ -81,8 +81,9 @@ public class SignUp extends AppCompatActivity {
         String id = databaseReference.push().getKey();
         String email = emailText.getText().toString();
         String name = nameText.getText().toString();
+        String imageUrl = "https://i.ibb.co/fkgmtvK/friend-image.jpg";
 
-        User user = new User(id, email, name);
+        User user = new User(id, email, name, imageUrl);
         assert id != null;
         Task<Void> task = databaseReference.child(id).setValue(user);
 
