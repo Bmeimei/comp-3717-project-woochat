@@ -21,16 +21,6 @@
             android:contentDescription="@string/friend_image"
             tools:srcCompat="@tools:sample/avatars" />
 
-        <ProgressBar
-            android:id="@+id/friend_progressBar"
-            style="@android:style/Widget.ProgressBar.Small"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:indeterminate="false"
-            android:progress="1"
-            android:visibility="visible" />
-
     </FrameLayout>
 
     <TextView

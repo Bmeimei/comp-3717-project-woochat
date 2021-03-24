@@ -21,21 +21,9 @@
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="30dp"
-                android:src="@drawable/friend_image"
                 app:civ_border_color="#FF000000"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:civ_border_width="2dp" />
-
-            <ProgressBar
-                android:id="@+id/userImage_progressBar"
-                style="@android:style/Widget.Holo.ProgressBar.Large"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center"
-                android:indeterminate="false"
-                android:progress="1"
-                android:visibility="visible" />
-
         </FrameLayout>
 
         <GridLayout

@@ -1,7 +1,6 @@
 package com.example.woochat.fragments;
 
 import android.content.Intent;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -16,20 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.example.woochat.DownloadImageFromUrl;
 import com.example.woochat.Landing;
 import com.example.woochat.R;
 import com.example.woochat.User;
-import com.google.android.gms.tasks.Continuation;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,12 +31,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.kennyc.bottomsheet.BottomSheetMenuDialogFragment;
-import com.squareup.picasso.Picasso;
 import com.stfalcon.imageviewer.StfalconImageViewer;
-import com.stfalcon.imageviewer.loader.ImageLoader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -70,7 +59,6 @@ public class SettingsFragment extends Fragment {
     TextView userIdText;
     TextView userEmailText;
     ImageView userImage;
-    ProgressBar progressBar;
 
     public SettingsFragment() {
 
@@ -113,9 +101,12 @@ public class SettingsFragment extends Fragment {
 
                 imageUrl = currentUser.imageUrl;
                 userImage = getView().findViewById(R.id.profile_image);
-                progressBar = getView().findViewById(R.id.userImage_progressBar);
 
-                new DownloadImageFromUrl(userImage, progressBar).execute(imageUrl);
+                Glide
+                        .with(getContext())
+                        .load(imageUrl)
+                        .thumbnail(Glide.with(getContext()).load(R.drawable.loading))
+                        .into(userImage);
 
                 userImage.setOnClickListener(v -> new StfalconImageViewer.Builder<>(getContext(),
                         new String[]{imageUrl}, (imageView, image) ->
@@ -215,7 +206,12 @@ public class SettingsFragment extends Fragment {
                 imageUrl = uri.toString();
                 databaseReference.child(userId).child("imageUrl").setValue(uri.toString());
                 Toast.makeText(getContext(), "Successfully Upload Image!", Toast.LENGTH_SHORT).show();
-                new DownloadImageFromUrl(userImage, progressBar).execute(imageUrl);
+
+                Glide
+                        .with(getContext())
+                        .load(imageUrl)
+                        .thumbnail(Glide.with(getContext()).load(R.drawable.loading))
+                        .into(userImage);
             } else {
                 Toast.makeText(getContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT).show();
             }

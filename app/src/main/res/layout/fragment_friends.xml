@@ -95,18 +95,7 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/tv_friends_userimage"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/friend_image" />
-
-                <ProgressBar
-                    android:id="@+id/friendPage_person_progressBar"
-                    style="@android:style/Widget.ProgressBar.Small"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:indeterminate="false"
-                    android:progress="1"
-                    android:visibility="visible" />
+                    android:layout_height="match_parent" />
             </FrameLayout>
 
 

@@ -1,6 +1,5 @@
 package com.example.woochat.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.woochat.DownloadImageFromUrl;
+import com.bumptech.glide.Glide;
 import com.example.woochat.FriendAdapter;
 import com.example.woochat.OnItemClickListener;
 import com.example.woochat.R;
@@ -27,12 +25,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +47,6 @@ public class FriendsFragment extends Fragment {
     String imageUrl;
     TextView tvCurrentUser;
     ImageView currentUserImage;
-    ProgressBar progressBar;
     FirebaseUser firebaseUser;
 
     public FriendsFragment() {
@@ -94,8 +89,11 @@ public class FriendsFragment extends Fragment {
                     tvCurrentUser.setText(user_name);
                     imageUrl = currentUser.imageUrl;
                     currentUserImage = getView().findViewById(R.id.tv_friends_userimage);
-                    progressBar = getView().findViewById(R.id.friendPage_person_progressBar);
-                    new DownloadImageFromUrl(currentUserImage, progressBar).execute(imageUrl);
+                    Glide
+                            .with(getContext())
+                            .load(imageUrl)
+                            .thumbnail(Glide.with(getContext()).load(R.drawable.loading))
+                            .into(currentUserImage);
                 }
             }
 
