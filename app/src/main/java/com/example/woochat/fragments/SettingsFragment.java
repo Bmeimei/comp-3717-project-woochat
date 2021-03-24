@@ -1,6 +1,7 @@
 package com.example.woochat.fragments;
 
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -40,6 +41,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.kennyc.bottomsheet.BottomSheetMenuDialogFragment;
+import com.squareup.picasso.Picasso;
+import com.stfalcon.imageviewer.StfalconImageViewer;
+import com.stfalcon.imageviewer.loader.ImageLoader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -110,6 +114,11 @@ public class SettingsFragment extends Fragment {
                 userImage = getView().findViewById(R.id.profile_image);
                 progressBar = getView().findViewById(R.id.userImage_progressBar);
                 new DownloadImageFromUrl(userImage, progressBar).execute(imageUrl);
+                userImage.setOnClickListener(v -> new StfalconImageViewer.Builder<>(getContext(),
+                        new String[]{imageUrl}, (imageView, image) ->
+                        Picasso.get().load(image).into(imageView))
+                        .withTransitionFrom(userImage)
+                        .show());
             }
 
             @Override
