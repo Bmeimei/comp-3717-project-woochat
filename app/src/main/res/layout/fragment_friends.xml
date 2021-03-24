@@ -92,7 +92,7 @@
                 android:layout_weight="6"
                 android:layout_height="match_parent">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/tv_friends_userimage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
