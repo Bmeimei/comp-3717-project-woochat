@@ -10,21 +10,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="30dp"
-            android:src="@drawable/friend_image"
-            app:civ_border_color="#FF000000"
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:id="@+id/image_frameLayout"
             android:layout_centerHorizontal="true"
-            app:civ_border_width="2dp" />
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/friend_image"
+                app:civ_border_color="#FF000000"
+                android:visibility="gone"
+                app:civ_border_width="2dp" />
+
+            <ProgressBar
+                android:id="@+id/userImage_progressBar"
+                style="@android:style/Widget.Holo.ProgressBar.Large"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:indeterminate="false"
+                android:progress="1"
+                android:visibility="visible" />
+
+        </FrameLayout>
 
         <GridLayout
             android:id="@+id/setting_gridLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/profile_image"
+            android:layout_below="@+id/image_frameLayout"
             android:layout_marginTop="41dp"
             android:gravity="center"
             android:orientation="horizontal"
@@ -115,11 +133,20 @@
 
 
             <Button
+                android:id="@+id/profileChange_button"
+                android:layout_width="match_parent"
+                android:layout_height="79dp"
+                android:layout_marginVertical="30dp"
+                android:text="@string/change_profile"
+                android:textSize="18sp" />
+
+            <Button
                 android:id="@+id/logout_button"
                 android:layout_width="match_parent"
                 android:layout_height="79dp"
                 android:text="@string/log_out"
                 android:textSize="18sp" />
+
         </LinearLayout>
 
     </RelativeLayout>

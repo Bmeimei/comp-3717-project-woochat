@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -27,6 +28,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View friendView = layoutInflater.inflate(R.layout.recycler_friends, parent, false);
+
         return new FriendHolder(friendView);
     }
 
@@ -34,11 +36,12 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
     public void onBindViewHolder(@NonNull FriendHolder holder, int position) {
         ImageView imageView = holder.friendIcon;
         TextView textView = holder.friendName;
+        ProgressBar progressBar = holder.progressBar;
 
         User user = friendList.get(position);
         String imageUrl = user.imageUrl;
 
-        new DownloadImageFromUrl(imageView).execute(imageUrl);
+        new DownloadImageFromUrl(imageView, progressBar).execute(imageUrl);
         textView.setText(user.name);
 
         holder.onClick(user, onItemClickListener);
@@ -53,11 +56,13 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
 
         public ImageView friendIcon;
         public TextView friendName;
+        public ProgressBar progressBar;
 
         public FriendHolder(@NonNull View itemView) {
             super(itemView);
             friendIcon = itemView.findViewById(R.id.imageView_chat);
             friendName = itemView.findViewById(R.id.textView_chat_friendName);
+            progressBar = itemView.findViewById(R.id.friend_progressBar);
         }
 
         /**

@@ -11,9 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.woochat.DownloadImageFromUrl;
 import com.example.woochat.FriendAdapter;
 import com.example.woochat.OnItemClickListener;
 import com.example.woochat.R;
@@ -47,6 +50,8 @@ public class FriendsFragment extends Fragment {
     String user_id;
     String imageUrl;
     TextView tvCurrentUser;
+    ImageView currentUserImage;
+    ProgressBar progressBar;
     FirebaseUser firebaseUser;
 
     public FriendsFragment() {
@@ -87,6 +92,10 @@ public class FriendsFragment extends Fragment {
                     assert currentUser != null;
                     user_name = currentUser.name;
                     tvCurrentUser.setText(user_name);
+                    imageUrl = currentUser.imageUrl;
+                    currentUserImage = getView().findViewById(R.id.tv_friends_userimage);
+                    progressBar = getView().findViewById(R.id.friendPage_person_progressBar);
+                    new DownloadImageFromUrl(currentUserImage, progressBar).execute(imageUrl);
                 }
             }
 
