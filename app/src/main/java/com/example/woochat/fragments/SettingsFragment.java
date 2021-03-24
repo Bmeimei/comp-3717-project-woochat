@@ -20,6 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.woochat.DownloadImageFromUrl;
 import com.example.woochat.Landing;
 import com.example.woochat.R;
@@ -113,10 +114,16 @@ public class SettingsFragment extends Fragment {
                 imageUrl = currentUser.imageUrl;
                 userImage = getView().findViewById(R.id.profile_image);
                 progressBar = getView().findViewById(R.id.userImage_progressBar);
+
                 new DownloadImageFromUrl(userImage, progressBar).execute(imageUrl);
+
                 userImage.setOnClickListener(v -> new StfalconImageViewer.Builder<>(getContext(),
                         new String[]{imageUrl}, (imageView, image) ->
-                        Picasso.get().load(image).into(imageView))
+                        Glide
+                                .with(getContext())
+                                .load(image)
+                                .thumbnail(Glide.with(getContext()).load(R.drawable.loading))
+                                .into(imageView))
                         .withTransitionFrom(userImage)
                         .show());
             }
