@@ -187,7 +187,9 @@ public class SettingsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_IMAGE_OK || requestCode == GALLERY_IMAGE_OK) {
             System.out.println("OK!");
-            uploadImageToFireBaseStorage(data);
+            if (data != null) {
+                uploadImageToFireBaseStorage(data);
+            }
         }
     }
 
