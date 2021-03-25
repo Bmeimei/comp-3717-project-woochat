@@ -20,12 +20,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-import com.google.android.gms.common.api.GoogleApi;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.DataSnapshot;
@@ -33,8 +29,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Objects;
 
 public class Login extends AppCompatActivity {
 
@@ -157,18 +151,32 @@ public class Login extends AppCompatActivity {
                 String name = googleSignInAccount.getDisplayName();
                 String email = googleSignInAccount.getEmail();
                 String id = googleSignInAccount.getId();
-                String imageUrl = "https://i.ibb.co/fkgmtvK/friend-image.jpg";
+                String imageUrl = googleSignInAccount.getPhotoUrl().toString();
                 User user = new User(id, email, name, imageUrl);
                 assert id != null;
-                Task<Void> task = databaseReference.child(id).setValue(user);
+                databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (!snapshot.hasChild(id)) {
+                            Task<Void> task = databaseReference.child(id).setValue(user);
 
-                try {
-                    task.addOnSuccessListener(e -> firebaseAuthWithGoogle(googleSignInAccount));
+                            try {
+                                task.addOnSuccessListener(e -> firebaseAuthWithGoogle(googleSignInAccount));
 
-                    task.addOnFailureListener(e -> Log.d("Failed", "Failed To Create User"));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                                task.addOnFailureListener(e -> Log.d("Failed", "Failed To Create User"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            firebaseAuthWithGoogle(googleSignInAccount);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         }
     }

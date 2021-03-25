@@ -81,7 +81,7 @@ public class SignUp extends AppCompatActivity {
         String id = databaseReference.push().getKey();
         String email = emailText.getText().toString();
         String name = nameText.getText().toString();
-        String imageUrl = "https://i.ibb.co/fkgmtvK/friend-image.jpg";
+        String imageUrl = "https://firebasestorage.googleapis.com/v0/b/woochat-3ce8d.appspot.com/o/friend_image.jpg?alt=media&token=b6096d33-1858-43ec-964c-8521d05e1dfa";
 
         User user = new User(id, email, name, imageUrl);
         assert id != null;

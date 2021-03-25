@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHolder> {
@@ -27,6 +29,7 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
 
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         View friendView = layoutInflater.inflate(R.layout.recycler_friends, parent, false);
+
         return new FriendHolder(friendView);
     }
 
@@ -38,7 +41,11 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHold
         User user = friendList.get(position);
         String imageUrl = user.imageUrl;
 
-        new DownloadImageFromUrl(imageView).execute(imageUrl);
+        Glide
+                .with(imageView.getContext())
+                .load(imageUrl)
+                .thumbnail(Glide.with(imageView.getContext()).load(R.drawable.loading))
+                .into(imageView);
         textView.setText(user.name);
 
         holder.onClick(user, onItemClickListener);
