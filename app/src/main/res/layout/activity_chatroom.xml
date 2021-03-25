@@ -16,22 +16,22 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_chatroom" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_chatroom_friend_id" />
 
     <TextView
-        android:id="@+id/textView_chatroom"
+        android:id="@+id/textView_chatroom_friend_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Friend's name"
         android:textColor="#CD780A"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText_chat"
+        android:id="@+id/chatroom_editText_chat"
         android:layout_width="275dp"
         android:layout_height="32dp"
         android:layout_marginBottom="16dp"
@@ -39,12 +39,12 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button_send"
+        app:layout_constraintEnd_toStartOf="@+id/chatroom_button_send"
         app:layout_constraintHorizontal_bias="0.48"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/button_send"
+        android:id="@+id/chatroom_button_send"
         android:layout_width="68dp"
         android:layout_height="39dp"
         android:layout_marginEnd="16dp"
@@ -52,4 +52,14 @@
         android:text="Send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/chatroom_rv_messages"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/chatroom_editText_chat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider_chatroom" />
 </androidx.constraintlayout.widget.ConstraintLayout>

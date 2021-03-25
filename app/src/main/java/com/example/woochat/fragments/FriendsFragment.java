@@ -1,6 +1,7 @@
 package com.example.woochat.fragments;
 
 import android.content.Intent;
+import android.inputmethodservice.ExtractEditText;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.woochat.ChatroomActivity;
 import com.example.woochat.FriendAdapter;
 import com.example.woochat.OnItemClickListener;
 import com.example.woochat.R;
@@ -37,6 +39,10 @@ import java.util.Objects;
  * create an instance of this fragment.
  */
 public class FriendsFragment extends Fragment {
+
+    public static final String EXTRA_USER_ID = "com.example.woochat.fragments.USER_ID";
+    public static final String EXTRA_FRIEND_ID = "com.example.woochat.fragments.FRIEND_ID";
+    public static final String EXTRA_FRIEND_NAME = "com.example.woochat.fragments.FRIEND_NAME";
 
     RecyclerView friendView;
     DatabaseReference databaseReference;
@@ -124,8 +130,11 @@ public class FriendsFragment extends Fragment {
                      */
                     @Override
                     public void setOnItemClickListener(User friend) {
-                        String word = String.format("User Name: %s, Friend Name: %s", user_name, friend.name);
-                        Toast.makeText(getContext(), word, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(getContext(), ChatroomActivity.class);
+                        intent.putExtra(EXTRA_USER_ID, user_id);
+                        intent.putExtra(EXTRA_FRIEND_ID, friend.userId);
+                        intent.putExtra(EXTRA_FRIEND_NAME, friend.name);
+                        startActivity(intent);
                     }
                 });
                 friendView.setAdapter(friendAdapter);
