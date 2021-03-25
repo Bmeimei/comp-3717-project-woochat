@@ -23,6 +23,7 @@
     <string name="log_out">Log Out</string>
     <string name="you">You</string>
     <string name="google_login">Google Login</string>
+    <string name="send">Send</string>
     <string name="change_profile">Change Profile</string>
     <string name="take_a_photo">Take a Photo</string>
     <string name="select_image_from_gallery">Select Image From Gallery</string>

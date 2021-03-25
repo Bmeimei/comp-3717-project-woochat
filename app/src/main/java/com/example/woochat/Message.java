@@ -3,21 +3,23 @@ package com.example.woochat;
 import java.util.Date;
 
 public class Message {
-    public final String messageId;
-    public final String senderId;
-    public final String receiverId;
-    public final String messageContent;
-    public final Date time;
+    public String messageId;
+    public String senderId;
+    public String receiverId;
+    public String messageContent;
+    public String time;
 
     public Message(String messageId,
                    String senderId,
                    String receiverId,
                    String messageContent,
-                   Date time) {
+                   String time) {
         this.messageId = messageId;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.messageContent = messageContent;
         this.time = time;
     }
+
+    public Message() {}
 }
