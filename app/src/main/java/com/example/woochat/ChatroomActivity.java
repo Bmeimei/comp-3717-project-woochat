@@ -92,7 +92,9 @@ public class ChatroomActivity extends AppCompatActivity {
                 MessageAdapter adapter = new MessageAdapter(messageList, userId);
                 rvMessages.setAdapter(adapter);
                 rvMessages.setLayoutManager(new LinearLayoutManager(ChatroomActivity.this));
-                rvMessages.smoothScrollToPosition(messageList.size() - 1);
+                if (messageList.size() > 0) {
+                    rvMessages.smoothScrollToPosition(messageList.size() - 1);
+                }
             }
 
             @Override
