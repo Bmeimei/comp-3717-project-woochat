@@ -10,9 +10,11 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.woochat.fragments.FriendsFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import java.util.TimeZone;
 
 public class ChatroomActivity extends AppCompatActivity {
@@ -35,8 +38,10 @@ public class ChatroomActivity extends AppCompatActivity {
     String userId;
     String friendId;
     String friendName;
+    String imageUrl;
     EditText editTextMessage;
     Button sendMessageButton;
+    ImageView friendImage;
 
     RecyclerView rvMessages;
     ArrayList<Message> messageList;
@@ -47,6 +52,7 @@ public class ChatroomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chatroom);
+        Objects.requireNonNull(getSupportActionBar()).hide();
 
         rvMessages = findViewById(R.id.chatroom_rv_messages);
         messageList = new ArrayList<Message>();
@@ -57,8 +63,17 @@ public class ChatroomActivity extends AppCompatActivity {
         TextView tvFriendName = findViewById(R.id.textView_chatroom_friend_id);
         tvFriendName.setText(friendName);
 
+        friendImage = findViewById(R.id.imageView_chatroom);
+
         userId = getIntent().getStringExtra(FriendsFragment.EXTRA_USER_ID);
         friendId = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_ID);
+        imageUrl = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_IMAGE);
+
+        Glide
+                .with(this)
+                .load(imageUrl)
+                .thumbnail(Glide.with(this).load(R.drawable.loading))
+                .into(friendImage);
 
         sendMessageButton = findViewById(R.id.chatroom_button_send);
         sendMessageButton.setOnClickListener(new View.OnClickListener() {

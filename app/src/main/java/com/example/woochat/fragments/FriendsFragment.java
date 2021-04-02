@@ -45,6 +45,7 @@ public class FriendsFragment extends Fragment {
     public static final String EXTRA_USER_ID = "com.example.woochat.fragments.USER_ID";
     public static final String EXTRA_FRIEND_ID = "com.example.woochat.fragments.FRIEND_ID";
     public static final String EXTRA_FRIEND_NAME = "com.example.woochat.fragments.FRIEND_NAME";
+    public static final String EXTRA_FRIEND_IMAGE = "com.example.woochat.fragments.FRIEND_IMAGE";
 
     RecyclerView friendView;
     DatabaseReference databaseReference;
@@ -144,6 +145,7 @@ public class FriendsFragment extends Fragment {
                         intent.putExtra(EXTRA_USER_ID, user_id);
                         intent.putExtra(EXTRA_FRIEND_ID, friend.userId);
                         intent.putExtra(EXTRA_FRIEND_NAME, friend.name);
+                        intent.putExtra(EXTRA_FRIEND_IMAGE, friend.imageUrl);
                         startActivity(intent);
                     }
                 });
