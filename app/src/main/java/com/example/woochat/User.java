@@ -1,5 +1,8 @@
 package com.example.woochat;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     public String userId;
     public String email;
