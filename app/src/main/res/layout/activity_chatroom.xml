@@ -16,28 +16,51 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.4"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView_chatroom_friend_id" />
+        app:layout_constraintTop_toBottomOf="@+id/chatroom_linearLayout" />
 
-    <TextView
-        android:id="@+id/textView_chatroom_friend_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Friend's name"
-        android:textColor="#CD780A"
+    <LinearLayout
+        android:id="@+id/chatroom_linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="@+id/divider_chatroom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imageView_chatroom"
+                android:layout_width="match_parent"
+                android:layout_weight="6"
+                android:layout_gravity="center"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/friend_image"
+                tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/textView_chatroom_friend_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity = "center_vertical|start"
+            android:layout_marginTop="24dp"
+            android:text="@string/friend_s_name"
+            android:layout_weight="2"
+            android:textColor="#CD780A"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.04"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/chatroom_editText_chat"
-        android:layout_width="275dp"
-        android:layout_height="32dp"
+        android:layout_width="237dp"
+        android:layout_height="39dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/custom_input"
         android:ems="10"
         android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/chatroom_button_send"
         app:layout_constraintHorizontal_bias="0.48"
@@ -45,8 +68,8 @@
 
     <Button
         android:id="@+id/chatroom_button_send"
-        android:layout_width="68dp"
-        android:layout_height="39dp"
+        android:layout_width="85dp"
+        android:layout_height="43dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="12dp"
         android:text="Send"
