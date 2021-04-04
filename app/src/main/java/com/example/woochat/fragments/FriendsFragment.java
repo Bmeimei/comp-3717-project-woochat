@@ -99,6 +99,7 @@ public class FriendsFragment extends Fragment {
         if (firebaseUser != null) {
             user_email = firebaseUser.getEmail();
         }
+        
         Bundle bundle = this.getArguments();
         assert bundle != null;
         user_id = bundle.getString("id");
