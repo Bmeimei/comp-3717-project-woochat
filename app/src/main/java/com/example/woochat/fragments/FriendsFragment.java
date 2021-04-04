@@ -52,7 +52,7 @@ public class FriendsFragment extends Fragment {
     public static final String EXTRA_FRIEND_IMAGE = "com.example.woochat.fragments.FRIEND_IMAGE";
 
     RecyclerView friendView;
-    DatabaseReference databaseReference, friendsReference, friendRequestReference;
+    DatabaseReference databaseReference, friendsReference;
     List<User> friendList;
     TextView tvFriends;
     String user_email;
@@ -94,12 +94,12 @@ public class FriendsFragment extends Fragment {
         CURRENT_STATE = "not_friends";
         assert firebaseUser != null;
         senderUserId = firebaseUser.getUid();
-//        friendRequestReference = FirebaseDatabase.getInstance().getReference().child("friendRequests");
         friendsReference = FirebaseDatabase.getInstance().getReference().child("friends");
 
         if (firebaseUser != null) {
             user_email = firebaseUser.getEmail();
         }
+        
         Bundle bundle = this.getArguments();
         assert bundle != null;
         user_id = bundle.getString("id");
