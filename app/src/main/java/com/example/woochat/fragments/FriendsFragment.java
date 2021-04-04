@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.woochat.Chat;
 import com.example.woochat.ChatroomActivity;
 import com.bumptech.glide.Glide;
 import com.example.woochat.FriendAdapter;
@@ -99,7 +101,7 @@ public class FriendsFragment extends Fragment {
         if (firebaseUser != null) {
             user_email = firebaseUser.getEmail();
         }
-        
+
         Bundle bundle = this.getArguments();
         assert bundle != null;
         user_id = bundle.getString("id");
@@ -163,7 +165,13 @@ public class FriendsFragment extends Fragment {
                                     intent.putExtra(EXTRA_USER_ID, user_id);
                                     intent.putExtra(EXTRA_FRIEND_ID, friend.userId);
                                     intent.putExtra(EXTRA_FRIEND_NAME, friend.name);
+                                    intent.putExtra(EXTRA_FRIEND_IMAGE, friend.imageUrl);
                                     startActivity(intent);
+                                }
+
+                                @Override
+                                public void setOnChatItemClickListener(Chat chat) {
+
                                 }
                             });
                             friendView.setAdapter(friendAdapter);
