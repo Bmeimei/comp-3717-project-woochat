@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.example.woochat.Chat;
 import com.example.woochat.ChatroomActivity;
 import com.bumptech.glide.Glide;
 import com.example.woochat.FriendAdapter;
@@ -99,7 +100,7 @@ public class FriendsFragment extends Fragment {
         if (firebaseUser != null) {
             user_email = firebaseUser.getEmail();
         }
-        
+
         Bundle bundle = this.getArguments();
         assert bundle != null;
         user_id = bundle.getString("id");
@@ -164,6 +165,11 @@ public class FriendsFragment extends Fragment {
                                     intent.putExtra(EXTRA_FRIEND_ID, friend.userId);
                                     intent.putExtra(EXTRA_FRIEND_NAME, friend.name);
                                     startActivity(intent);
+                                }
+
+                                @Override
+                                public void setOnChatItemClickListener(Chat chat) {
+
                                 }
                             });
                             friendView.setAdapter(friendAdapter);

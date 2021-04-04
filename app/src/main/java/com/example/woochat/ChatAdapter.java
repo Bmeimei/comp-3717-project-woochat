@@ -13,65 +13,66 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendHolder> {
+public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatHolder> {
 
-    private final List<User> friendList;
+    private final List<Chat> chatList;
     private final OnItemClickListener onItemClickListener;
 
-    public FriendAdapter(List<User> friendList, OnItemClickListener onItemClickListener) {
-        this.friendList = friendList;
+    public ChatAdapter(List<Chat> chatList, OnItemClickListener onItemClickListener) {
+        this.chatList = chatList;
         this.onItemClickListener = onItemClickListener;
     }
 
     @NonNull
     @Override
-    public FriendHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public ChatHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View friendView = layoutInflater.inflate(R.layout.recycler_friends, parent, false);
+        View chatView = layoutInflater.inflate(R.layout.recycler_chat, parent, false);
 
-        return new FriendHolder(friendView);
+        return new ChatHolder(chatView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FriendHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ChatHolder holder, int position) {
         ImageView imageView = holder.friendIcon;
         TextView textView = holder.friendName;
+        TextView messageView = holder.message;
 
-        User user = friendList.get(position);
-        String imageUrl = user.imageUrl;
+        Chat chat = chatList.get(position);
+        String imageUrl = chat.imageUrl;
 
         Glide
                 .with(imageView.getContext())
                 .load(imageUrl)
                 .thumbnail(Glide.with(imageView.getContext()).load(R.drawable.loading))
                 .into(imageView);
-        textView.setText(user.name);
+        textView.setText(chat.friendName);
+        messageView.setText(chat.messageContent);
 
-        holder.onClick(user, onItemClickListener);
+        holder.onClick(chat, onItemClickListener);
     }
 
     @Override
     public int getItemCount() {
-        return friendList.size();
+        return chatList.size();
     }
 
-    public static class FriendHolder extends RecyclerView.ViewHolder {
+    public static class ChatHolder extends RecyclerView.ViewHolder {
 
         public ImageView friendIcon;
         public TextView friendName;
+        public TextView message;
 
-        public FriendHolder(@NonNull View itemView) {
+        public ChatHolder(@NonNull View itemView) {
             super(itemView);
             friendIcon = itemView.findViewById(R.id.imageView_friend);
             friendName = itemView.findViewById(R.id.textView_friend_friendName);
+            message = itemView.findViewById(R.id.textView_chatDetail);
+
         }
 
-        /**
-         * Set an onclick function for this holder.
-         */
-        public void onClick(User user, OnItemClickListener onItemClickListener) {
-            itemView.setOnClickListener(v -> onItemClickListener.setOnItemClickListener(user));
+        public void onClick(Chat chat, OnItemClickListener onItemClickListener) {
+            itemView.setOnClickListener(v -> onItemClickListener.setOnChatItemClickListener(chat));
         };
     }
 }

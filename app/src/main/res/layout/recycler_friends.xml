@@ -14,7 +14,7 @@
         android:layout_weight="6">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imageView_chat"
+            android:id="@+id/imageView_friend"
             android:layout_width="match_parent"
             android:layout_gravity="center"
             android:layout_height="match_parent"
@@ -24,7 +24,7 @@
     </FrameLayout>
 
     <TextView
-        android:id="@+id/textView_chat_friendName"
+        android:id="@+id/textView_friend_friendName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"

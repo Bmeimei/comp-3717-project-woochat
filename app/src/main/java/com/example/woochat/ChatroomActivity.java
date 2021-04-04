@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.woochat.fragments.ChatFragment;
 import com.example.woochat.fragments.FriendsFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,6 +40,7 @@ public class ChatroomActivity extends AppCompatActivity {
     String friendId;
     String friendName;
     String imageUrl;
+    String messageId;
     EditText editTextMessage;
     Button sendMessageButton;
     ImageView friendImage;
@@ -59,15 +61,24 @@ public class ChatroomActivity extends AppCompatActivity {
 
         editTextMessage = findViewById(R.id.chatroom_editText_chat);
 
-        friendName = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_NAME);
+//        userId = getIntent().getStringExtra(FriendsFragment.EXTRA_USER_ID);
+//        friendId = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_ID);
+//        imageUrl = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_IMAGE);
+//        friendName = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_NAME);
+
+//        if (TextUtils.isEmpty(userId)) {
+            userId = getIntent().getStringExtra(ChatFragment.EXTRA_USER_ID);
+            friendId = getIntent().getStringExtra(ChatFragment.EXTRA_FRIEND_ID);
+            imageUrl = getIntent().getStringExtra(ChatFragment.EXTRA_FRIEND_IMAGE);
+            friendName = getIntent().getStringExtra(ChatFragment.EXTRA_FRIEND_NAME);
+//        }
         TextView tvFriendName = findViewById(R.id.textView_chatroom_friend_id);
         tvFriendName.setText(friendName);
 
         friendImage = findViewById(R.id.imageView_chatroom);
 
-        userId = getIntent().getStringExtra(FriendsFragment.EXTRA_USER_ID);
-        friendId = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_ID);
-        imageUrl = getIntent().getStringExtra(FriendsFragment.EXTRA_FRIEND_IMAGE);
+
+
 
         Glide
                 .with(this)
@@ -83,7 +94,9 @@ public class ChatroomActivity extends AppCompatActivity {
             }
         });
 
+
         dbMessages = FirebaseDatabase.getInstance().getReference("messages");
+
     }
 
     @Override
