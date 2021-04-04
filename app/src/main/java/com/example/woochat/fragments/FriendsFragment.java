@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -164,6 +165,7 @@ public class FriendsFragment extends Fragment {
                                     intent.putExtra(EXTRA_USER_ID, user_id);
                                     intent.putExtra(EXTRA_FRIEND_ID, friend.userId);
                                     intent.putExtra(EXTRA_FRIEND_NAME, friend.name);
+                                    intent.putExtra(EXTRA_FRIEND_IMAGE, friend.imageUrl);
                                     startActivity(intent);
                                 }
 

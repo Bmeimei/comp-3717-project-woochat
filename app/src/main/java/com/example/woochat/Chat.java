@@ -3,15 +3,14 @@ package com.example.woochat;
 import java.util.Objects;
 
 public class Chat {
-    public String messageId;
+
     public String friendName;
     public String imageUrl;
     public String friendId;
     public String userId;
     public String messageContent;
 
-    public Chat(String messageId, String friendName, String imageUrl, String friendId, String userId, String messageContent) {
-        this.messageId = messageId;
+    public Chat(String friendName, String imageUrl, String friendId, String userId, String messageContent) {
         this.friendName = friendName;
         this.imageUrl = imageUrl;
         this.friendId = friendId;

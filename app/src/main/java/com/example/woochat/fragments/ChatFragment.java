@@ -8,9 +8,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.woochat.Chat;
 import com.example.woochat.ChatAdapter;
@@ -28,6 +30,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
@@ -49,7 +52,11 @@ public class ChatFragment extends Fragment {
     FirebaseUser firebaseUser;
 
     String currentUserId;
+    String currentUserEmail;
     List<Chat> chatList;
+    List<Message> messagesList;
+    String lastMessage;
+    String friendId;
 
 
     public ChatFragment() {
@@ -74,10 +81,32 @@ public class ChatFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         chatList = new ArrayList<>();
+        messagesList = new ArrayList<>();
 
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
-        currentUserId = firebaseUser.getUid();
+        currentUserEmail = firebaseUser.getEmail();
+    }
+
+    private void getCurrentUserId() {
+        userReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    User user = dataSnapshot.getValue(User.class);
+
+                    assert user != null;
+                    if (user.email.equals(currentUserEmail)) {
+                        currentUserId = user.userId;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -99,6 +128,7 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        getCurrentUserId();
 
         messageReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -124,12 +154,18 @@ public class ChatFragment extends Fragment {
                                     String friendName = friend.name;
 
                                     // instantiate Chat object
-                                    Chat chat = new Chat(message.messageId, friendName, friendImageUrl, friendId, currentUserId, message.messageContent);
+                                    Chat chat = new Chat(friendName, friendImageUrl, friendId, currentUserId, message.messageContent);
 
                                     if (message.receiverId.equals(friendId) || message.senderId.equals(friendId)) {
                                         if (!chatList.contains(chat)) {
                                             if (!chat.friendId.equals(currentUserId)) {
                                                 chatList.add(chat);
+                                            }
+                                        } else {
+                                            for (int i = 0; i < chatList.size(); i++) {
+                                                if (chatList.get(i).equals(chat)) {
+                                                    chatList.get(i).messageContent = chat.messageContent;
+                                                }
                                             }
                                         }
                                     }
@@ -172,9 +208,5 @@ public class ChatFragment extends Fragment {
 
             }
         });
-
-//        FirebaseRecyclerOptions<User> options =
-//                new FirebaseRecyclerOptions.Builder<User>()
-//                .setQuery()
     }
 }
