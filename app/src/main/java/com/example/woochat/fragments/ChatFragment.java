@@ -86,27 +86,10 @@ public class ChatFragment extends Fragment {
         firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
         assert firebaseUser != null;
         currentUserEmail = firebaseUser.getEmail();
-    }
 
-    private void getCurrentUserId() {
-        userReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
-                    User user = dataSnapshot.getValue(User.class);
-
-                    assert user != null;
-                    if (user.email.equals(currentUserEmail)) {
-                        currentUserId = user.userId;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
+        currentUserId = bundle.getString("id");
     }
 
     @Override
@@ -128,7 +111,6 @@ public class ChatFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        getCurrentUserId();
 
         messageReference.addValueEventListener(new ValueEventListener() {
             @Override
