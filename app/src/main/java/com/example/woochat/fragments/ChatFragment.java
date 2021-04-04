@@ -138,7 +138,8 @@ public class ChatFragment extends Fragment {
                                     // instantiate Chat object
                                     Chat chat = new Chat(friendName, friendImageUrl, friendId, currentUserId, message.messageContent);
 
-                                    if (message.receiverId.equals(friendId) || message.senderId.equals(friendId)) {
+                                    if ((message.receiverId.equals(friendId) && message.senderId.equals(currentUserId))
+                                            || (message.senderId.equals(friendId)) && message.receiverId.equals(currentUserId)) {
                                         if (!chatList.contains(chat)) {
                                             if (!chat.friendId.equals(currentUserId)) {
                                                 chatList.add(chat);
