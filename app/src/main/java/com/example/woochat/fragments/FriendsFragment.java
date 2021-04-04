@@ -145,7 +145,7 @@ public class FriendsFragment extends Fragment {
                             for (DataSnapshot dataSnapShot : snapshot.getChildren()) {
                                 User friend = dataSnapShot.getValue(User.class);
                                 assert friend != null;
-                                if (friend.userId.equals(friendUserId)) {
+                                if (friend.userId.equals(friendUserId) && !friendList.contains(friend)) {
                                     friendList.add(friend);
                                 }
                             }
