@@ -124,16 +124,18 @@
                 android:id="@+id/profileChange_button"
                 android:layout_width="match_parent"
                 android:layout_height="79dp"
-                android:layout_marginVertical="30dp"
+                android:layout_marginVertical="10dp"
                 android:text="@string/change_profile"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:backgroundTint="@android:color/holo_green_dark" />
 
             <Button
                 android:id="@+id/logout_button"
                 android:layout_width="match_parent"
                 android:layout_height="79dp"
                 android:text="@string/log_out"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:backgroundTint="@android:color/holo_green_dark" />
 
         </LinearLayout>
 

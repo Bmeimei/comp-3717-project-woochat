@@ -105,14 +105,25 @@
             </FrameLayout>
 
 
+<!--            <TextView-->
+<!--                android:id="@+id/tv_friends_username"-->
+<!--                android:layout_width="327dp"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:layout_gravity="center_vertical"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="TextView"-->
+<!--                android:textAlignment="inherit" />-->
             <TextView
                 android:id="@+id/tv_friends_username"
                 android:layout_width="327dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="sans-serif-black"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:text="TextView"
-                android:textAlignment="inherit" />
+                android:textSize="18sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </RelativeLayout>
 </FrameLayout>
