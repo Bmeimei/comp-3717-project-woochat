@@ -1,6 +1,7 @@
 package com.example.woochat.fragments;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -8,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -34,6 +36,9 @@ import com.google.firebase.storage.StorageReference;
 import com.kennyc.bottomsheet.BottomSheetListener;
 import com.kennyc.bottomsheet.BottomSheetMenuDialogFragment;
 import com.stfalcon.imageviewer.StfalconImageViewer;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -166,7 +171,9 @@ public class SettingsFragment extends Fragment {
             @Override
             public void onSheetItemSelected(@NonNull BottomSheetMenuDialogFragment bottomSheetMenuDialogFragment, @NonNull MenuItem menuItem, Object o) {
                 if (menuItem.getItemId() == R.id.camera) {
-                    startActivityForResult(new Intent(MediaStore.ACTION_IMAGE_CAPTURE), CAMERA_IMAGE_OK);
+                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+                    startActivityForResult(intent, CAMERA_IMAGE_OK);
 
                 } else {
                     startActivityForResult(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI), GALLERY_IMAGE_OK);
@@ -185,37 +192,74 @@ public class SettingsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == CAMERA_IMAGE_OK || requestCode == GALLERY_IMAGE_OK) {
             System.out.println("OK!");
+            System.out.println(data);
             if (data != null) {
-                uploadImageToFireBaseStorage(data);
+                uploadImageToFireBaseStorage(data, requestCode == CAMERA_IMAGE_OK);
             }
         }
     }
 
-    private void uploadImageToFireBaseStorage(Intent intent) {
-        Uri imageUri = intent.getData();
+    private void uploadImageToFireBaseStorage(Intent intent, boolean isCamera) {
+        Uri imageUri;
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile_image/" + System.currentTimeMillis() + ".png");
-        storageReference.putFile(imageUri).continueWithTask(task1 -> {
-            if (!task1.isSuccessful()) {
-                throw task1.getException();
-            }
-            return storageReference.getDownloadUrl();
-        }).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Uri uri = task.getResult();
-                imageUrl = uri.toString();
-                databaseReference.child(userId).child("imageUrl").setValue(uri.toString());
-                Toast.makeText(getContext(), "Successfully Upload Image!", Toast.LENGTH_SHORT).show();
+        // When upload gallery image.
+        if (!isCamera) {
+            imageUri = intent.getData();
 
-                Glide
-                        .with(getContext())
-                        .load(imageUrl)
-                        .thumbnail(Glide.with(getContext()).load(R.drawable.loading))
-                        .into(userImage);
-            } else {
-                Toast.makeText(getContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT).show();
-            }
-        });
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile_image/" + System.currentTimeMillis() + ".png");
+            storageReference.putFile(imageUri).continueWithTask(task1 -> {
+                if (!task1.isSuccessful()) {
+                    throw task1.getException();
+                }
+                return storageReference.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri uri = task.getResult();
+                    imageUrl = uri.toString();
+                    databaseReference.child(userId).child("imageUrl").setValue(uri.toString());
+                    Toast.makeText(getContext(), "Successfully Upload Image!", Toast.LENGTH_SHORT).show();
+
+                    Glide
+                            .with(getContext())
+                            .load(imageUrl)
+                            .thumbnail(Glide.with(getContext()).load(R.drawable.loading))
+                            .into(userImage);
+                } else {
+                    Toast.makeText(getContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            // When upload camera image
+        } else {
+            Bitmap photo = (Bitmap) intent.getExtras().get("data");
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+
+            byte[] bytes = stream.toByteArray();
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference("profile_image/" + System.currentTimeMillis() + ".png");
+            storageReference.putBytes(bytes).continueWithTask(task1 -> {
+                if (!task1.isSuccessful()) {
+                    throw task1.getException();
+                }
+                return storageReference.getDownloadUrl();
+            }).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Uri uri = task.getResult();
+                    imageUrl = uri.toString();
+                    databaseReference.child(userId).child("imageUrl").setValue(uri.toString());
+                    Toast.makeText(getContext(), "Successfully Upload Image!", Toast.LENGTH_SHORT).show();
+
+                    Glide
+                            .with(getContext())
+                            .load(imageUrl)
+                            .thumbnail(Glide.with(getContext()).load(R.drawable.loading))
+                            .into(userImage);
+                } else {
+                    Toast.makeText(getContext(), "Failed to Upload Image!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
 }
