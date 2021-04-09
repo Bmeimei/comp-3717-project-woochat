@@ -149,6 +149,7 @@ public class FriendsFragment extends Fragment {
                                 assert friend != null;
                                 if (friend.userId.equals(friendUserId) && !friendList.contains(friend)) {
                                     friendList.add(friend);
+                                    break;
                                 }
                             }
 
